@@ -54,3 +54,10 @@ gulp.task('js:build', function() {
         .pipe(rename({suffix:'.min'}))
         .pipe(gulp.dest('dist/js/'))
 })
+
+
+gulp.task('img:optimize', function () {
+    return gulp.src('src/images/*.*')
+        .pipe(tinypng())
+        .pipe(gulp.dest('dist/images/'))
+});
