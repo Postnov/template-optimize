@@ -21,6 +21,10 @@ var gulp = require('gulp'),
 gulp.task('css:build', function() {
     gulp.src('src/css/main.scss')
         .pipe(sass())
+        .on('error', function (err) {
+            console.log(err.toString());
+            this.emit('end');
+        })
         .pipe(prefixer({
             browsers: ['last 15 versions'],
             cascade: false,
@@ -35,3 +39,18 @@ gulp.task('css:build', function() {
         .pipe(gulp.dest('dist/css/'))
         
 });
+
+
+
+gulp.task('js:build', function() {
+    return gulp.src('src/js/main.js')
+        .pipe(imports())
+        .on('error', function (err) {
+            console.log(err.toString());
+            this.emit('end');
+        })
+        .pipe(gulp.dest('dist/js/'))
+        .pipe(uglify())
+        .pipe(rename({suffix:'.min'}))
+        .pipe(gulp.dest('dist/js/'))
+})
